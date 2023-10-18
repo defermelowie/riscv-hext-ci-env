@@ -1,25 +1,22 @@
 # Start with ubuntu base image
 FROM ubuntu:latest
 
-# Set `/ci` as top-level working directory
+# Set environment variables
+ENV SCRIPT=/ci/scripts
+ENV BIN=/ci/bin
+ENV PATH=$PATH:$BIN
+
+# Setup working directory
 WORKDIR /ci
+COPY scripts/* $SCRIPT/
+RUN mkdir -p $BIN/
 
-# Copy emulator resources into container
-COPY spike /ci/res/spike
-COPY cva6 /ci/res/cva6
+# Update package list and install common tools
+RUN apt-get update && apt-get install git make gcc -y
+RUN apt-get install gcc-riscv64-unknown-elf -y
+RUN apt-get install clang -y
 
-# Build spike emulator
-RUN apt-get update \
-    && apt-get install gcc make git build-essential device-tree-compiler -y
-RUN mkdir -p ./res/spike/build \
-    && cd ./res/spike/build \
-    && ../configure \
-    && make
-RUN cd /ci \
-    && mkdir -p bin \
-    && cp ./res/spike/build/spike ./bin/spike
+# Build emulators/models
+RUN $SCRIPT/install-spike.sh
+RUN $SCRIPT/install-cva6.sh
 
-# TODO: build cva6 emulator
-
-# Put "emulators" into path
-ENV PATH=$PATH:/ci/bin

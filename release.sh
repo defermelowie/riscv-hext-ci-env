@@ -2,19 +2,19 @@
 
 # Define variables
 CONTAINER_REGISTRY=registry.gitlab.kuleuven.be;
-CONTAINER_TEST_IMAGE=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:test;
-CONTAINER_RELEASE_IMAGE=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:latest;
+CONTAINER_WIP_IMG=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:wip;
+CONTAINER_REL_IMG=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:latest;
 
 
 # Build container
-docker build --pull -t $CONTAINER_TEST_IMAGE .
+docker build --pull -t $CONTAINER_WIP_IMG .
 
 # Test emulators
-docker run $CONTAINER_TEST_IMAGE spike -h || exit -1
+docker run $CONTAINER_WIP_IMG spike -h || exit -1
 
 # Release to registry
-docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-docker push $CONTAINER_RELEASE_IMAGE
+docker tag $CONTAINER_WIP_IMG $CONTAINER_REL_IMG
+docker push $CONTAINER_REL_IMG
 
 # Successful exit
 exit 0
