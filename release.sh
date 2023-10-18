@@ -3,7 +3,7 @@
 # Define variables
 CONTAINER_REGISTRY=registry.gitlab.kuleuven.be;
 CONTAINER_TEST_IMAGE=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:test;
-CONTAINER_RELEASE_IMAGE=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:latest;
+CONTAINER_RELEASE_IMAGE=$CONTAINER_REGISTRY/u0165022/riscv-ci-env:cva6;
 
 
 # Build container
