@@ -1,7 +1,7 @@
 # Start with ubuntu base image
 FROM ubuntu:latest
 
-# `/ci` is the top-level working directory
+# Set `/ci` as top-level working directory
 WORKDIR /ci
 
 # Copy emulator resources into container
@@ -18,3 +18,8 @@ RUN mkdir -p ./res/spike/build \
 RUN cd /ci \
     && mkdir -p bin \
     && cp ./res/spike/build/spike ./bin/spike
+
+# TODO: build cva6 emulator
+
+# Put "emulators" into path
+ENV PATH=$PATH:/ci/bin
