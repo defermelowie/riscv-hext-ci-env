@@ -1,0 +1,6 @@
+[submodule "cva6"]
+	path = cva6
+	url = https://github.com/minho-pulp/cva6.git
+[submodule "spike"]
+	path = spike
+	url = https://github.com/riscv-software-src/riscv-isa-sim.git
