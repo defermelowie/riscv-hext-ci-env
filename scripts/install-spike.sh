@@ -10,6 +10,10 @@ git clone $SPIKE_REPO spike
 mkdir -p spike/build && cd spike/build
 ../configure
 make
+cd ../..
 
 # Copy executable to $BIN
-cp ./spike $BIN/
+cp ./spike/build/spike $BIN/
+
+# Cleanup
+rm -rf ./spike
