@@ -68,7 +68,29 @@ RUN git submodule update --init --recursive
 RUN echo "TODO: build cva model"
 RUN apt-get install sudo curl wget -y
 
+# --------------------------------------------------------------
+
 FROM base as cva6
 RUN echo "TODO: install cva6 runtime deps"
 RUN echo "TODO: copy required cva6 artifacts"
 
+# --------------------------------------------------------------
+# TODO: Image with rocket-chip instance
+# --------------------------------------------------------------
+
+FROM toolchain as rocket-builder
+ENV ROCKET_REPO=https://github.com/chipsalliance/rocket-chip.git
+ENV ROCKET_REPO_DIR=/ci/rocket
+
+RUN apt-get install verilator -y
+RUN echo "TODO: install build deps"
+RUN git clone $ROCKET_REPO $ROCKET_REPO_DIR
+WORKDIR $ROCKET_REPO_DIR
+RUN git submodule update --init
+RUN make verilog
+
+# --------------------------------------------------------------
+
+FROM base as rocket
+RUN echo "TODO: install rocket-chip instance runtime deps"
+RUN echo "TODO: copy required instance artifacts"
