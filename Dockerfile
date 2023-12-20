@@ -83,7 +83,8 @@ ENV ROCKET_REPO=https://github.com/chipsalliance/rocket-chip.git
 ENV ROCKET_REPO_DIR=/ci/rocket
 
 RUN apt-get install verilator -y
-RUN echo "TODO: install build deps"
+RUN wget -O - https://github.com/llvm/circt/releases/download/firtool-1.59.0/circt-full-shared-linux-x64.tar.gz | tar -zx && ln -s /firtool-1.59.0/bin/* $BIN
+# TODO: install all build deps
 RUN git clone $ROCKET_REPO $ROCKET_REPO_DIR
 WORKDIR $ROCKET_REPO_DIR
 RUN git submodule update --init
@@ -94,3 +95,7 @@ RUN make verilog
 FROM base as rocket
 RUN echo "TODO: install rocket-chip instance runtime deps"
 RUN echo "TODO: copy required instance artifacts"
+
+# --------------------------------------------------------------
+# TODO: Image with RISC-V qemu instance
+# --------------------------------------------------------------

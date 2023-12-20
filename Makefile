@@ -1,5 +1,5 @@
 CONTAINER_REGISTRY = registry.gitlab.kuleuven.be/u0165022/riscv-ci-env
-VERSION = v1.0.2
+VERSION = v1.0.3
 
 # --------------------------------------------------------------
 # Build images
@@ -25,7 +25,7 @@ build-cva6:
 # --------------------------------------------------------------
 
 .PONY: release
-release: tag-version push-version
+release: push-version push-latest
 
 .PONY: tag-version
 tag-version:
@@ -33,8 +33,20 @@ tag-version:
 	docker tag spike:wip $(CONTAINER_REGISTRY)/spike:$(VERSION)
 	docker tag cva6:wip $(CONTAINER_REGISTRY)/cva6:$(VERSION)
 
+.PONY: tag-latest
+tag-latest:
+	docker tag toolchain:wip $(CONTAINER_REGISTRY)/toolchain:latest
+	docker tag spike:wip $(CONTAINER_REGISTRY)/spike:latest
+	docker tag cva6:wip $(CONTAINER_REGISTRY)/cva6:latest
+
 .PONY: push-version
-push-version:
+push-version: tag-version
 	docker push $(CONTAINER_REGISTRY)/toolchain:$(VERSION)
 	docker push $(CONTAINER_REGISTRY)/spike:$(VERSION)
-	# docker push $(CONTAINER_REGISTRY)/cva6:$(VERSION)
+# docker push $(CONTAINER_REGISTRY)/cva6:$(VERSION)
+
+.PONY: push-latest
+push-latest: tag-latest
+	docker push $(CONTAINER_REGISTRY)/toolchain:latest
+	docker push $(CONTAINER_REGISTRY)/spike:latest
+# docker push $(CONTAINER_REGISTRY)/cva6:$(VERSION)
