@@ -20,14 +20,10 @@ RUN apt-get update && apt-get install git make gcc build-essential -y
 # --------------------------------------------------------------
 
 FROM base as toolchain
+# Install both, GNU & LLVM based toolchains
 RUN apt-get install gcc-riscv64-unknown-elf -y
+RUN apt-get install gcc-riscv64-linux-gnu -y
 RUN apt-get install clang -y
-# Install clang-17 from nightly sources
-# RUN apt-get install wget -y
-# RUN echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main\ndeb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" >> /etc/apt/sources.list
-# RUN wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-# RUN apt-get update && apt-get install clang-17 -y
-# RUN echo "alias clang=clang-17" >> ~/.profile
 
 # --------------------------------------------------------------
 # Image with spike emulator
