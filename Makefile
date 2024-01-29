@@ -6,7 +6,7 @@ VERSION ?= wip
 # --------------------------------------------------------------
 
 .PONY: build build-%
-build: build-toolchain build-spike build-cva6
+build: build-toolchain build-spike build-qemu build-cva6
 
 build-%:
 	docker build --target $* -t $*:wip .
@@ -16,7 +16,7 @@ build-%:
 # --------------------------------------------------------------
 
 .PONY: release push-% tag-%
-release: push-toolchain push-spike
+release: push-toolchain push-spike push-qemu
 
 tag-%: build-%
 	docker tag $*:wip $(REGISTRY)/$*:$(VERSION)
@@ -25,3 +25,4 @@ tag-%: build-%
 push-%: tag-%
 	docker push $(REGISTRY)/$*:$(VERSION)
 	docker push $(REGISTRY)/$*:latest
+	

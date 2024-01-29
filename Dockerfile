@@ -13,7 +13,8 @@ WORKDIR /ci
 RUN mkdir -p $BIN/
 
 # Update package list and install common tools
-RUN apt-get update && apt-get install git make gcc build-essential -y
+RUN apt-get update
+RUN apt-get install git make gcc build-essential -y
 
 # --------------------------------------------------------------
 # Image with RISC-V gnu and llvm toolchains
@@ -47,6 +48,13 @@ COPY --from=spike-builder /ci/spike/build/spike-log-parser $BIN/
 COPY --from=spike-builder /ci/spike/build/xspike $BIN/
 COPY --from=spike-builder /ci/spike/build/termios-xspike $BIN/
 COPY --from=spike-builder /ci/spike/build/elf2hex $BIN/
+
+# --------------------------------------------------------------
+# Image with RISC-V qemu instance
+# --------------------------------------------------------------
+
+FROM base as qemu
+RUN apt-get install qemu-system-riscv64 -y
 
 # --------------------------------------------------------------
 # TODO: Image with cva6 model
@@ -91,7 +99,3 @@ RUN make verilog
 FROM base as rocket
 RUN echo "TODO: install rocket-chip instance runtime deps"
 RUN echo "TODO: copy required instance artifacts"
-
-# --------------------------------------------------------------
-# TODO: Image with RISC-V qemu instance
-# --------------------------------------------------------------
