@@ -4,6 +4,7 @@ Several docker images for use in CI of bare metal RISC-V programs:
 
 - `toolchain`: Contains the gcc-riscv64-unknown-elf as well as llvm toolchains for RISC-V
 - `spike`: Contains the spike isa simulator
+- `qemu`: Contains qemu-system-riscv64
 
 ## ToDo
 
