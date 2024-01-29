@@ -9,7 +9,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  REPOSITORY: ${{ github.repository }}
 
 
 jobs:
@@ -58,7 +58,7 @@ jobs:
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         id: build-and-push
-        run: make release VERSION=${{ env.VERSION }} REGISTRY=${{ env.REGISTRY }}
+        run: make release VERSION=${{ env.VERSION }} REGISTRY=${{ env.REGISTRY }}/${{ env.REPOSITORY }}
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
