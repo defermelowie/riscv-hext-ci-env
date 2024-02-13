@@ -1,12 +1,17 @@
 REGISTRY = registry.gitlab.kuleuven.be/u0165022/riscv-ci-env
 VERSION ?= wip
 
+IMAGES = toolchain 
+IMAGES += spike 
+IMAGES += qemu
+# IMAGES += cva6
+
 # --------------------------------------------------------------
 # Build & tag images
 # --------------------------------------------------------------
 
 .PONY: build build-%
-build: build-toolchain build-spike build-qemu build-cva6
+build: $(IMAGES:%=build-%)
 
 build-%:
 	docker build --target $* -t $*:wip .
@@ -16,7 +21,7 @@ build-%:
 # --------------------------------------------------------------
 
 .PONY: release push-% tag-%
-release: push-toolchain push-spike push-qemu
+release: $(IMAGES:%=push-%)
 
 tag-%: build-%
 	docker tag $*:wip $(REGISTRY)/$*:$(VERSION)
