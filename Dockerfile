@@ -30,8 +30,8 @@ COPY .git/modules/riscv-gnu-toolchain .git/modules/riscv-gnu-toolchain
 WORKDIR riscv-gnu-toolchain
 RUN ./configure --prefix=/opt/riscv --enable-multilib --with-cmodel=medany 
 RUN make
-RUN make linux
-RUN make musl
+# RUN make linux
+# RUN make musl
 
 # --------------------------------------------------------------
 
