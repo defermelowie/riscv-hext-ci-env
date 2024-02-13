@@ -39,8 +39,8 @@ FROM base as toolchain
 # Install LLVM based toolchain
 RUN apt-get install clang -y
 # TODO: Copy gnu toolchain
-RUN apt-get install gcc-riscv64-unknown-elf -y
-# COPY --from=toolchain-builder /opt/riscv/bin/* $BIN/
+# RUN apt-get install gcc-riscv64-unknown-elf -y
+COPY --from=toolchain-builder /opt/riscv/bin/* $BIN/
 
 
 # --------------------------------------------------------------
