@@ -39,8 +39,8 @@ RUN apt-get install clang -y
 # Install GNU bare metal toolchain
 RUN apt-get install gcc-riscv64-unknown-elf -y
 # Copy GNU linux toolchain
-# TODO: Copy toolchain
-COPY --from=toolchain-builder /opt/riscv/bin/* $BIN/
+COPY --from=toolchain-builder /opt/riscv/ /opt/riscv
+RUN ln -s /opt/riscv/bin/riscv64-unknown-linux-gnu-* $BIN/
 
 
 # --------------------------------------------------------------
