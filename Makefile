@@ -4,7 +4,6 @@ VERSION ?= wip
 IMAGES = toolchain 
 IMAGES += spike 
 IMAGES += qemu
-# IMAGES += cva6
 
 # --------------------------------------------------------------
 # Build & tag images
