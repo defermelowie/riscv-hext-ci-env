@@ -1,4 +1,5 @@
 REGISTRY = registry.gitlab.kuleuven.be/u0165022/riscv-ci-env
+# REGISTRY = ghcr.io/defermelowie/riscv-hext-ci-env
 VERSION ?= wip
 
 IMAGES = toolchain 
