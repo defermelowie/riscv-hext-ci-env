@@ -2,7 +2,7 @@
 # Base image with common tools
 # --------------------------------------------------------------
 
-FROM ubuntu:latest as base
+FROM ubuntu:latest AS base
 
 # Set environment variables
 ENV BIN=/ci/bin
@@ -20,7 +20,7 @@ RUN apt-get install git make gcc build-essential -y
 # Image with RISC-V gnu and llvm toolchains
 # --------------------------------------------------------------
 
-FROM base as toolchain
+FROM base AS toolchain
 # Install both, GNU & LLVM based toolchains
 RUN apt-get install gcc-riscv64-unknown-elf -y
 RUN apt-get install gcc-riscv64-linux-gnu -y
@@ -30,7 +30,7 @@ RUN apt-get install clang -y
 # Image with spike emulator
 # --------------------------------------------------------------
 
-FROM toolchain as spike-builder
+FROM toolchain AS spike-builder
 
 RUN apt-get install device-tree-compiler -y
 COPY riscv-isa-sim spike
@@ -39,7 +39,7 @@ RUN make -C spike/build
 
 # --------------------------------------------------------------
 
-FROM base as spike
+FROM base AS spike
 RUN apt-get install device-tree-compiler -y
 COPY --from=spike-builder /ci/spike/build/spike $BIN/
 COPY --from=spike-builder /ci/spike/build/spike-dasm $BIN/
@@ -52,5 +52,5 @@ COPY --from=spike-builder /ci/spike/build/elf2hex $BIN/
 # Image with RISC-V qemu instance
 # --------------------------------------------------------------
 
-FROM base as qemu
+FROM base AS qemu
 RUN apt-get install qemu-system-riscv64 -y
