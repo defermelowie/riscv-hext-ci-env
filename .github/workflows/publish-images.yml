@@ -23,6 +23,10 @@ jobs:
       contents: read
       packages: write
 
+    strategy:
+      matrix:
+        target: [toolchain, spike, qemu]
+
     steps:
       - name: Set SemVer tag
         if: startsWith(github.event.ref, 'refs/tags/v')
@@ -54,6 +58,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v5
         with:
-            tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/toolchain:${{ env.VERSION }}
-            target: toolchain
+            tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}/${{ matrix.target }}:${{ env.VERSION }}
+            target: ${{ matrix.target }}
             push: true
