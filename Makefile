@@ -6,7 +6,7 @@ VERSION ?= wip
 # --------------------------------------------------------------
 
 .PONY: build build-%
-build: build-toolchain build-spike build-qemu build-cva6
+build: build-toolchain build-spike build-qemu
 
 build-%:
 	docker build --target $* -t $*:wip .
