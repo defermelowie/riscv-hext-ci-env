@@ -2,7 +2,7 @@
 # Base image with common tools
 # --------------------------------------------------------------
 
-FROM ubuntu:mantic as base
+FROM ubuntu:latest as base
 
 # Set environment variables
 ENV BIN=/ci/bin
